@@ -24,7 +24,10 @@ async def on_ready():
     print("We have logged in as {0.user}".format(BOT))    # Show in terminal that the BOT is Login succesfully
 
 async def on_message(message):
-    print("just for test")
 
+    # Check the message from channel if its from the same BOT 
+    if message.author == BOT.user:
+        return                           # Ignore  
+    
 
 BOT.run(DISCORD_TOKEN)
