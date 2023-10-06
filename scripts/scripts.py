@@ -16,12 +16,14 @@ def check_ai(message):
     result = responce.choice[1].text.strip()
     if result == True: 
         return result 
+    else: 
+        pass 
 
-
+# Manual warning function: 
 def warn_moder(message):
     return 
 
-
+# Manual ban function:
 async def ban_moder(ctx, user: discord.Member):  
     if ctx.author.guild_permissions.ban_members :            # Check if the user has the ban permission.
         await ctx.guild.ban(user)
@@ -29,6 +31,7 @@ async def ban_moder(ctx, user: discord.Member):
     else:
         await ctx.send("You Dont have the Permission to ban members")
 
+# Manual Kick function:
 async def kick_moder(ctx, user: discord.Member):
     if ctx.author.guild_permission.kick_members:
         await ctx.guild.kick(user)
@@ -37,12 +40,16 @@ async def kick_moder(ctx, user: discord.Member):
         await ctx.send(f"You Dont have Permession to kick members")
 
 
-
+# Automatic warn function
 def auto_warn(message):
     if check_ai(message) == True : 
         return 
 
-
+# Automatic ban function 
 def auto_ban(message):
     return
 
+
+# Function check warnings by user or admin 
+def check_warn():
+    return
