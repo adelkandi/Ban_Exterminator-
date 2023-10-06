@@ -14,6 +14,7 @@ import scripts as sc    # Import functions from scripts file
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
+
 intents = discord.Intents.default()
 intents.message_content = True
 intents.ban_members = True   # Unable the ban intents for Bot 
@@ -29,7 +30,6 @@ async def kick(ctx,user:discord.Member):
     await sc.kick_moder(ctx,user)
 async def ban(ctx, user: discord.Member):
     return                                  # I will add next time a system of 3 warnings then ban automatically;
-
 
 
 

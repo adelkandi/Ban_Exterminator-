@@ -29,14 +29,18 @@ async def ban_moder(ctx, user: discord.Member):
     else:
         await ctx.send("You Dont have the Permission to ban members")
 
-    return
+async def kick_moder(ctx, user: discord.Member):
+    if ctx.author.guild_permission.kick_members:
+        await ctx.guild.kick(user)
+        await ctx.send(f"{user.name} has been kicked from the server!")
+    else:
+        await ctx.send(f"You Dont have Permession to kick members")
 
-async def kick_moder():
-    return
 
 
 def auto_warn(message):
-    return
+    if check_ai(message) == True : 
+        return 
 
 
 def auto_ban(message):
