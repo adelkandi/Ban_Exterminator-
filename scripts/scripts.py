@@ -2,6 +2,7 @@
 import discord
 import requests
 import openai
+import json
 
 
 # check message 
@@ -19,9 +20,41 @@ def check_ai(message):
     else: 
         pass 
 
+
+#####################################
+# Helper functions for warnings : 
+warnings = {}
+def load_warnings():
+    try:
+        with open("warnings.json","r") as file:
+            json.load(file)
+    except FileNotFoundError:
+        return{}
+    
+def save_warnings():
+    with open("warnings.json","w") as file : 
+        json.dump(warnings, file,indent=4)
+
+def add_warnings(user_id):
+    user_id_str = str(user_id)
+    warnings[user_id_str] = warnings.get(user_id_str,0) + 1
+    save_warnings()
+
+
+
+#####################################
 # Manual warning function: 
-def warn_moder(message):
-    return 
+async def warn_moder(ctx, user:discord.Member):
+    if ctx.author.guild_permession.warn_members:
+        await ctx.send(f"{user.name} Has been warned!")
+        with open("warnings.json","r") as file:
+            warnings = json.load(file)
+        with open("warnings.json","w") as file:
+            return
+            
+
+    else: 
+        await ctx.send("You Dont have permession to warn members")
 
 # Manual ban function:
 async def ban_moder(ctx, user: discord.Member):  
@@ -51,5 +84,8 @@ def auto_ban(message):
 
 
 # Function check warnings by user or admin 
-def check_warn():
-    return
+def check_warn(user_id):
+    with open("warnings.json","r") as file :
+        warnings = json.load(file)
+    return warnings.get(str(user_id), 0)
+   
