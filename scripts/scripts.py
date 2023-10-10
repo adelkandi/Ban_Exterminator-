@@ -80,13 +80,18 @@ async def kick_moder(ctx, user: discord.Member):
 
 
 # Automatic warn function
-def auto_warn(message):
+def auto_warn(message,user_id,user: discord.Member):
     if check_ai(message) == True : 
-        return 
+        add_warnings(user_id)
+        return f"User {user.name} has been warned!!, Total warnings {check_warn(user_id)}"
 
 # Automatic ban function 
-def auto_ban(message):
-    return
+async def auto_ban(message,ctx,user_id,user: discord.Member):
+    totalwarnings = check_warn(user_id)
+    if totalwarnings == 3 :
+        await ctx.guild.ban(user_id)
+
+    return f"User {user_id} has been banned from this server!!"
 
 
 # Function check warnings by user or admin 
