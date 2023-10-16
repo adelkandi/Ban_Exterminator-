@@ -17,8 +17,7 @@ DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.default()
 intents.message_content = True
-intents.ban_members = True   # Unable the ban intents for Bot 
-BOT = discord.Client(intents=intents)
+BOT = commands.Bot(command_prefix='!', intents=intents) # Allow commands for this bot 
 
 
 
@@ -31,10 +30,12 @@ async def kick(ctx,user:discord.Member):
     await sc.kick_moder(ctx,user)
 
 async def ban(ctx, user: discord.Member):
-    return                                  # I will add next time a system of 3 warnings then ban automatically;
+    await sc.ban_moder(ctx,user)
+    await sc.auto_ban()
+async def warn(user: discord.Member,message,user_id):
+    await sc.auto_warn(message,user)     # Auto warning: check ai run True 
+    await sc.warn_moder(user_id)        # moderator warning
 
-async def warn(ctx, user: discord.Member):
-    return
 
 # Event when Bot sense a message :
 @BOT.event
@@ -53,7 +54,7 @@ async def on_message(message,user):
         await message.channel.send("This message breaks community value standards!")
 
     if message.channel.content == "!Check_war":
-        result = sc.check_warn()
+        result = sc.check_warn(user)
         await message.channel.send(f"{user.name} the numbers of warnnings you have is: ") # Make update Later when you finnish the check_awarn() function 
 
     

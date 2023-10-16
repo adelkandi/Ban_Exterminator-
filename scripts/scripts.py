@@ -49,18 +49,6 @@ async def warn_moder(user_id):
     add_warnings(user_id)
     return f"User {user_id} has been warned!!!, Total warnings{check_warn(user_id)}"
 
-#async def warn_moder(ctx, user:discord.Member):
-#    if ctx.author.guild_permession.warn_members:
-#        await ctx.send(f"{user.name} Has been warned!")
-#        with open("warnings.json","r") as file:
-#            warnings = json.load(file)
-#        with open("warnings.json","w") as file:
-#            return
-            
-
-#    else: 
-#        await ctx.send("You Dont have permession to warn members")
-
 
 # Manual ban function:
 async def ban_moder(ctx, user: discord.Member):  
