@@ -1,4 +1,5 @@
 # Ban Exterminator BOT 
+
 from dotenv import load_dotenv
 import os
 import discord
@@ -13,7 +14,8 @@ import scripts as sc    # Import functions from scripts file
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-
+# Open ai api key extraction:
+openai.api_key = os.getenv("OPENAI_TOKEN")
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -26,8 +28,8 @@ BOT = commands.Bot(command_prefix='!', intents=intents) # Allow commands for thi
 @BOT.command() 
 
 # Command Functions:
-async def kick(ctx,user:discord.Member):
-    await sc.kick_moder(ctx,user)
+async def kick(ctx,user:discord.Member,user_id):
+    await sc.kick_moder(ctx,user,user_id)
 
 async def ban(ctx, user: discord.Member):
     await sc.ban_moder(ctx,user)
@@ -49,11 +51,19 @@ async def on_message(message,user):
     # Check the message from channel if its from the same BOT 
     if message.author == BOT.user:
         return                           # Ignore  
-    result = sc.check_ai(message)
+    
+    # Call the check ai function to work on message channel 
+    state = True  # state is True untieprogramm is shutdown ; 
+    while state == True :
+        result = sc.check_ai(message)
+
     if result == True:       
         await message.channel.send("This message breaks community value standards!")
 
-    if message.channel.content == "!Check_war":
+        
+
+    if message.channel.content.startswith("$Check_warn"):
+        await message.channel.send("i see u")
         result = sc.check_warn(user)
         await message.channel.send(f"{user.name} the numbers of warnnings you have is: ") # Make update Later when you finnish the check_awarn() function 
 

@@ -1,24 +1,26 @@
 # Function that runs the bots 
 import discord
-import requests
 import openai
 import json
+from dotenv import load_dotenv
+import os 
 
-
+openai.api_key = os.getenv("OPENAI_TOKEN")
 # check message 
 def check_ai(message):
     responce = openai.Completion.creat(
-        engine = "text-davenci-004",
+        engine = "text-davenci-003",
         prompt = f"check this message if it breaks community value standards and just response with True or Falsed nothing else; the message is:{message}",
         max_tokens = 100,
         n = 1,
         temperature = 0.5,
         stop = None,)
     result = responce.choice[1].text.strip()
+    print(result)
     if result == True: 
         return result 
     else: 
-        pass 
+        return False 
 
 
 #####################################
